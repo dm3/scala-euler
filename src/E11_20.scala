@@ -27,6 +27,9 @@ class E_11 extends Problem[Tuple2[Tuple2[Int, Int], Int]] {
             "01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48")
               .map(_.split(" ").map(_ toInt))
 
+    /**
+     * We are only interested in looking right, down, left and right diagonal
+     */
     def calculate(col: Int, row: Int) = {
         val horizontal = if (data(row).size - col < length) 0
                             else (col until col + length).foldLeft(1)(_ * data(row)(_))
@@ -48,30 +51,7 @@ class E_11 extends Problem[Tuple2[Tuple2[Int, Int], Int]] {
 class E_12 extends Problem[Int] {
     import Util._
 
-    /*
-    * every number is divisible by 1 and itself, so we add 2 to the result
-    * for each prime we check, if the number supplied is divisible by the current prime, if it is:
-    * 1) add the current prime to the list of factors
-    * 2) multiply the current prime by all the factors we have already determined (including itself) and add them to the list
-    *    if they aren't greater than the number supplied
-    */
-    def primeFactors(n: Int): Stream[Int] = n match {
-        case 1 => Stream.range(1, 1)
-        case _ => primes(ints(2)).takeWhile(_ <= n).filter(n % _ == 0)
-    }
-
-    def numFactors2(n: Int) = {
-        val primes = primeFactors(n)
-        print("primes for " + n + ": "); primes.print
-        val ret = (for (a <- primes;
-                                       b <- primes;
-                                       val res = a * b if a <= b && n % (a * b) == 0)
-                                  yield res)
-        print("res: "); ret.print
-        ret.length + 2 + primes.length //might be an error if a*b == n (s/ + 2/ + 1)
-    }
-
     def numFactors(n: Int) = (1 to Math.sqrt(n)).filter(n % _ == 0).length * 2
 
     override def result = triangles(ints(1)).dropWhile(numFactors(_) <= 500).first
-} //76576500
+} //76576500    7.094 sec
