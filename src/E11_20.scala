@@ -169,5 +169,5 @@ class E_13 extends Problem[String] {
         }
     }
 
-    override def result = calc(0, data).reverse.mkString.toList.take(10).mkString
+    override def result = calc(0, data).reverse.mkString.substring(1, 10)
 } //5537376230
