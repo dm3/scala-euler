@@ -159,7 +159,7 @@ class E_13 extends Problem[String] {
                     "72107838435069186155435662884062257473692284509516",
                     "20849603980134001723930671666823555245252804609722",
                     "53503534226472524250874054075591789781264330331690")
-                .map(_.toList.map(_.toString.toInt))).reverse
+                .map(_.toList.map(_.asDigit))).reverse
 
     def calc(carry: Int, data: List[List[Int]]): List[Int] = data match {
         case Nil => carry :: Nil
@@ -169,8 +169,8 @@ class E_13 extends Problem[String] {
         }
     }
 
-    override def result = calc(0, data).reverse.mkString.substring(1, 10)
-} //5537376230
+    override def result = calc(0, data).reverse.mkString.substring(0, 10)
+} //537376230
 
 //Which starting number, under one million, produces the longest chain?
 class E_14 extends Problem[Int] {
@@ -203,3 +203,8 @@ class E_14_Memo extends Problem[Int] {
 class E_15 extends Problem[Int] {
     override def result = 1
 }
+
+//What is the sum of the digits of the number 2^(1000)?
+class E_16 extends Problem[Long] {
+    override def result = BigInt(2).pow(1000).toString.map(_.asDigit).foldLeft(0L)(_ + _)
+} //1366
