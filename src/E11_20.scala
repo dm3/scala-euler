@@ -205,6 +205,13 @@ class E_15 extends Problem[Int] {
 }
 
 //What is the sum of the digits of the number 2^(1000)?
-class E_16 extends Problem[Long] {
-    override def result = BigInt(2).pow(1000).toString.map(_.asDigit).foldLeft(0L)(_ + _)
+class E_16 extends Problem[Int] {
+    override def result = BigInt(2).pow(1000).toString.map(_.asDigit).foldLeft(0)(_ + _)
 } //1366
+
+//Find the sum of the digits in the number 100!
+class E_20 extends Problem[BigInt] {
+    import Util._
+    
+    override def result = fact(BigInt(100)).toString.map(_.asDigit).foldLeft(0)(_ + _)
+} //648

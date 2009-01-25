@@ -1,4 +1,4 @@
-class Problem[T] {
+abstract class Problem[T] {
     import scala.compat._
 
     def timedResult(): T = {
@@ -8,5 +8,6 @@ class Problem[T] {
         println("duration: " + (end - start).toDouble / 1000 + " sec")
         res
     }
+
     def result(): T = error(":/")
 }
