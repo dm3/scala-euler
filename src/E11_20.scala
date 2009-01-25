@@ -209,6 +209,27 @@ class E_16 extends Problem[Int] {
     override def result = BigInt(2).pow(1000).toString.map(_.asDigit).foldLeft(0)(_ + _)
 } //1366
 
+//If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?
+class E_17 extends Problem[Int] {
+    val digit = Array("", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
+    val digit1020 = Array("ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen")
+    val digit10 = Array("", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety")
+    val hundred = "hundred"
+    val thousand = "thousand"
+    val and = "and"
+
+    def asWords(n: Int): List[String] = n match {
+        case n if n / 1000 > 0 => digit(n / 1000) :: thousand :: asWords(n % 1000)
+        case n if n / 100 > 0 && n % 100 == 0 => digit(n / 100) :: hundred :: asWords(n % 100)
+        case n if n / 100 > 0 => digit(n / 100) :: hundred :: and :: asWords(n % 100)
+        case n if n / 10 > 0 && n >= 20 => digit10(n / 10) :: asWords(n % 10)
+        case n if n / 10 > 0 => digit1020(n % 10) :: Nil
+        case n => digit(n) :: Nil
+    }
+
+    override def result = (1 to 1000).map(asWords(_).mkString.length).foldLeft(0)(_ + _)
+} //21124
+
 //Find the sum of the digits in the number 100!
 class E_20 extends Problem[BigInt] {
     import Util._
