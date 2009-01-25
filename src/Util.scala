@@ -13,8 +13,8 @@ class InfiniteIterable[S, E](init: S, calcNext: Array[S] => E) extends Iterable.
 object Util {
     import BigInt._
     
-    def fact[T](n: T) = {
-        def fact1(n: T, acc: T): T = if (n == 0) acc else fact1(n - 1, acc * n)
+    def fact(n: BigInt) = {
+        def fact1(n: BigInt, acc: BigInt): BigInt = if (n == 0) acc else fact1(n - 1, acc * n)
         fact1(n, 1)
     }
 
