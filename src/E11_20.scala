@@ -171,3 +171,31 @@ class E_13 extends Problem[String] {
 
     override def result = calc(0, data).reverse.mkString.substring(1, 10)
 } //5537376230
+
+//Which starting number, under one million, produces the longest chain?
+class E_14 extends Problem[Int] {
+    final def chain(n: Long): Int = n match {
+        case 1 => 1
+        case n if n % 2 == 0 => 1 + chain(n / 2L)
+        case n => 1 + chain(n * 3L + 1L)
+    }
+
+    override def result = (1 until 1000000).map(x => (x, chain(x.toLong))).toList.sort(_._2 > _._2).head._1
+} //837799 - 21.875 sec
+
+//~ 1 sec faster than without memoisation
+class E_14_Memo extends Problem[Int] {
+    import scalaz.memo.Memo._
+    import scalaz.memo.Memo
+
+    val memo = mutableHashMapMemo[Long, Int]
+
+    //not passing memo as a parameter (or implicit) results in better performance
+    final def chain(n: Long): Int = n match {
+        case 1 => 1
+        case n if n % 2 == 0 => 1 + memo.get(chain)(n / 2L)
+        case n => 1 + memo.get(chain)(n * 3L + 1L)
+    }
+
+    override def result = (1 until 1000000).map(x => (x, chain(x.toLong))).toList.sort(_._2 > _._2).head._1
+} //837799 - 20.125 sec
