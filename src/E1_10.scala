@@ -102,13 +102,11 @@ class E_9 extends Problem[Int] {
     override def result = triplet._1 * triplet._2 * triplet._3
 } //31875000
 
-//Find the sum of all the primes below two million.  NOT SOLVED
+//Find the sum of all the primes below two million.
 class E_10 extends Problem[Long] {
     import scala.BigInt._
 
-    lazy val sum: Long = (2 until 2000000).filter(_ isProbablePrime 2000).foldLeft(0)(_ + _)
-    // import Util._
-   // lazy val sum: Long = primes(ints(2)).take(2000000).foldLeft(0)(_ + _)
+    val sum: Long = (2 until 2000000).filter(_ isProbablePrime 2000).foldLeft(0L)(_ + _)
 
     override def result = sum
-} //1247509434
+} //142913828922

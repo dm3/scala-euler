@@ -199,3 +199,7 @@ class E_14_Memo extends Problem[Int] {
 
     override def result = (1 until 1000000).map(x => (x, chain(x.toLong))).toList.sort(_._2 > _._2).head._1
 } //837799 - 20.125 sec
+
+class E_15 extends Problem[Int] {
+    override def result = 1
+}

@@ -1,3 +1,3 @@
 object Main extends Application {
-    println(new E_14 timedResult)
+    println(new E_10 timedResult)
 }
