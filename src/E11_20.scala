@@ -230,6 +230,27 @@ class E_17 extends Problem[Int] {
     override def result = (1 to 1000).map(asWords(_).mkString.length).foldLeft(0)(_ + _)
 } //21124
 
+//Find the maximum total from top to bottom of the triangle below:
+class E_18 extends Problem[Int] {
+    /**
+     * Arrange given triangle into a tree structure and traverse it
+     * choosing the subtrees that weigh the most
+     */
+    import Util._
+    import scala.List._
+
+    val root: Root = numbers.foldRight(List.Empty)((arr, list) => arr.zip(make(arr.length, Empty)).map(Node(_._1, )))
+    val numbers: List[Array[Int]] = {
+        val list = readLinesAsNumbers("src/data/e_18.txt").toList
+        //duplicate all elements in the list excluding the first and the last ones
+        list.head :: list.tail.init.foldLeft(List[Int])((acc, el) => el :: el :: acc) :: list.last :: Nil
+    }
+
+    def makeTree(list: List[Int]): List[Node]
+
+    override def result = 1
+}
+
 //Find the sum of the digits in the number 100!
 class E_20 extends Problem[BigInt] {
     import Util._
