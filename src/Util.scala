@@ -10,25 +10,12 @@ class InfiniteIterable[S, E](init: S, calcNext: Array[S] => E) extends Iterable.
     }
 }
 
-case class Node[T <% Ordered[T]](value: T, left: Node[T], right: Node[T]) {
-    def foldLeft[A](init: A)(f: (A, T) => A): A = f(right.foldLeft(left.foldLeft(init)(f))(f), value)
-    def ^ = left max right
-}
-
-case class Empty[T <% Ordered[T]] extends Node[T](null.asInstanceOf[T], null.asInstanceOf[Node[T]], null.asInstanceOf[Node[T]]) {
-    override def foldLeft[A](init: A)(f: (A, T) => A): A = init
-}
-
-case class Root[T <% Ordered[T]](override val left: Node[T], override val right: Node[T]) extends Node[T](null.asInstanceOf[T], left, right) {
-    override def foldLeft[A](init: A)(f: (A, T) => A): A = right.foldLeft(left.foldLeft(init)(f))(f)
-}
-
 object Util {
     import BigInt._
     import scala.io.Source._
 
     def readLinesAsNumbers(file: String): Iterator[Array[Int]] =
-        fromFile(file).getLines.map(_.split(" ").map(_.stripLineEnd).map(_.toInt))
+        fromFile(file).getLines.map(_.split(" ").map(_.stripLineEnd.toInt))
 
     def fact(n: BigInt) = {
         def fact1(n: BigInt, acc: BigInt): BigInt = if (n == 0) acc else fact1(n - 1, acc * n)
