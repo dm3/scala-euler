@@ -14,8 +14,8 @@ object Util {
     import BigInt._
     import scala.io.Source._
 
-    def readLinesAsNumbers(file: String): Iterator[Array[Int]] =
-        fromFile(file).getLines.map(_.split(" ").map(_.stripLineEnd.toInt))
+    def readLinesAsNumbers(file: String): Iterator[List[Int]] =
+      fromFile(file).getLines.map(_.split(" ").toList.map(_.stripLineEnd.toInt))
 
     def fact(n: BigInt) = {
         def fact1(n: BigInt, acc: BigInt): BigInt = if (n == 0) acc else fact1(n - 1, acc * n)
