@@ -235,7 +235,7 @@ class E_18 extends Problem[Int] {
     import scala.List._
     val file = "src/data/e_18.txt"
 
-    val triangle: List[List[Int]] = readLinesAsNumbers(file).toList.reverse
+    val triangle: List[List[Int]] = readLinesAsNumbers(file)(" ").toList.reverse
     def compose(lower: List[Int], higher: List[Int]): List[Int] = ((lower, higher): @unchecked) match {
       case (la :: lb :: ls, h :: hs) => (la max lb) + h :: compose(lb :: ls, hs)
       case (_, Nil) => Nil
