@@ -3,16 +3,15 @@
 * Evaluate the sum of all the amicable numbers under 10000.
 */
 class E_21 extends Problem[Int] {
-  def sumOfDiv(n: Int) = (2 to Math.sqrt(n)).map(x => if (n % x == 0) x + n / x else 0).foldLeft(1)(_ + _)
-
+  import Util._
   /**
   * N - the number to find its amicable pair for
   * a - the sum of the proper divisors of N (Ns possible amicable pair)
   * b - if 'a' is Ns amicable pair, b == n
   */
   def sum(n: Int) = {
-    val a = sumOfDiv(n)
-    val b = sumOfDiv(a)
+    val a = sumOfDivisors(n)
+    val b = sumOfDivisors(a)
     // a > b condition is needed to remove duplicate (reversed) amicable pairs
     if (a > b && b == n && n != a) Some((n, a, b)) else None
   }
@@ -30,6 +29,22 @@ class E_22 extends Problem[Int] {
   /**
   * Convert each name to a list of integeres (65-90 as there are only uppercase names)
   */
-  val names = readLines("data/e_22.txt")(_.stripLineEnd.split(",").toList.map(x => x.replaceAll("\"", ""))).next
+  val names = readLines("data/e_22.txt")(_.split(",").toList.map(_.replaceAll("\"", ""))).next //one line
   override def result = names.filter(_.length > 0).sort(_ < _).zipWithIndex.foldLeft(0)((acc, el) => acc + sum(el._1.toSeq) * (el._2 + 1))
+}
+
+class E_23 extends Problem[Int] {
+  import Util._
+  val upper = 28123 //greatest number which cannot (theoretically) be expressed as the sum of abundant numbers
+
+  /*
+   * this condition is satisfying, because the greater the number (x), the greater is the sum of its divisors
+   * upper * 6 has been derived empirically :)
+   */
+  val abundantNums = ints(1).map(x => (x, sumOfDivisors(x))).filter(x => x._1 < x._2).takeWhile(pair => 2 * pair._2 <= upper * 6)
+  def result = {
+    val abundantSum: mutable.HashSet[Int] = new mutable.HashSet
+    for (a <- abundantNums; b <- abundantNums) abundantSum += (a._1 + b._1)
+    (1 to upper).filter(!abundantSum.contains(_)).foldLeft(0)(_ + _)
+  }
 }
